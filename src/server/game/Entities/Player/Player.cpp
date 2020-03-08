@@ -5486,8 +5486,8 @@ void Player::ApplyRatingMod(CombatRating combatRating, int32 value, bool apply)
     switch (combatRating)
     {
         case CR_HASTE_MELEE:
-            UpdateHasteRating(BASE_ATTACK, combatRating);
-            UpdateHasteRating(OFF_ATTACK, combatRating);
+            ApplyHasteMod(BASE_ATTACK, combatRating);
+            ApplyHasteMod(OFF_ATTACK, combatRating);
             /* ApplyAttackTimePercentMod(BASE_ATTACK, oldVal, false);
             ApplyAttackTimePercentMod(OFF_ATTACK, oldVal, false);
             ApplyAttackTimePercentMod(BASE_ATTACK, newVal, true);
@@ -5496,12 +5496,12 @@ void Player::ApplyRatingMod(CombatRating combatRating, int32 value, bool apply)
         case CR_HASTE_RANGED:
             /* ApplyAttackTimePercentMod(RANGED_ATTACK, oldVal, false);
             ApplyAttackTimePercentMod(RANGED_ATTACK, newVal, true); */
-            UpdateHasteRating(RANGED_ATTACK, combatRating);
+            ApplyHasteMod(RANGED_ATTACK, combatRating);
             break;
         case CR_HASTE_SPELL:
             /* ApplyCastTimePercentMod(oldVal, false);
             ApplyCastTimePercentMod(newVal, true); */
-            UpdateHasteRating(MAX_ATTACK, combatRating);
+            ApplyHasteMod(MAX_ATTACK, combatRating);
             break;
         default:
             break;
@@ -21563,9 +21563,9 @@ void Player::InitDataForForm(bool reapplyMods)
         SetAttackTime(RANGED_ATTACK, BASE_ATTACK_TIME); */
 
         //CUSTOM -> Apply Haste ratings to forms
-        UpdateHasteRating(BASE_ATTACK, CR_HASTE_MELEE);
-        UpdateHasteRating(OFF_ATTACK, CR_HASTE_MELEE);
-        UpdateHasteRating(RANGED_ATTACK, CR_HASTE_RANGED);
+        ApplyHasteMod(BASE_ATTACK, CR_HASTE_MELEE);
+        ApplyHasteMod(OFF_ATTACK, CR_HASTE_MELEE);
+        ApplyHasteMod(RANGED_ATTACK, CR_HASTE_RANGED);
     /* }
     else
         SetRegularAttackTime(); */

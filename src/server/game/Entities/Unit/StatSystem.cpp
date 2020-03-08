@@ -991,8 +991,8 @@ float Player::GetWeaponDelay(EquipmentSlots equipSlot) {
     return m_items[equipSlot] ? (m_items[equipSlot]->GetTemplate()->Delay) : BASE_ATTACK_TIME;
 }
 
-//Custom
-void Player::UpdateHasteRating(WeaponAttackType att, CombatRating combatRating){
+//Custom -- Needs an aura/spell version
+void Player::ApplyHasteMod(WeaponAttackType att, CombatRating combatRating){
     float WeaponDelay = 0.0f;
     float rating = m_baseRatingValue[combatRating];
 
