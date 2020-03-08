@@ -985,10 +985,10 @@ float Player::GetWeaponDelay(EquipmentSlots equipSlot) {
     if (IsInFeralForm()) {
         ShapeshiftForm form = GetShapeshiftForm();
         SpellShapeshiftEntry const* ssEntry = sSpellShapeshiftStore.LookupEntry(form);
-        return  ssEntry ? ssEntry->attackSpeed * 1.0f : BASE_ATTACK_TIME * 1.0f;
+        return  ssEntry ? ssEntry->attackSpeed : BASE_ATTACK_TIME;
     }
     
-    return m_items[equipSlot] ? (m_items[equipSlot]->GetTemplate()->Delay)*1.0f : BASE_ATTACK_TIME * 1.0f;
+    return m_items[equipSlot] ? (m_items[equipSlot]->GetTemplate()->Delay) : BASE_ATTACK_TIME;
 }
 
 //Custom
@@ -996,7 +996,7 @@ void Player::UpdateHasteRating(WeaponAttackType att, CombatRating combatRating){
     float WeaponDelay = 0.0f;
     float rating = m_baseRatingValue[combatRating];
 
-    if (m_baseRatingValue[combatRating] > sWorld->getIntConfig(CONFIG_STATS_LIMITS_HASTE))
+    if ((m_baseRatingValue[combatRating] > sWorld->getIntConfig(CONFIG_STATS_LIMITS_HASTE)) && sWorld->getBoolConfig(CONFIG_STATS_LIMITS_ENABLE))
         rating = sWorld->getIntConfig(CONFIG_STATS_LIMITS_HASTE);
 
     float INSTA_CAP = 0;
@@ -1019,7 +1019,7 @@ void Player::UpdateHasteRating(WeaponAttackType att, CombatRating combatRating){
             break;
     }
 
-    WeaponDelay *= fmax( (INSTA_CAP - rating) / (INSTA_CAP + rating), 0.0f); //Zeroes out -- Dips into negatives without fmax()
+    WeaponDelay *= fmax( (INSTA_CAP - rating) / (INSTA_CAP + rating), 0.0f);
     
     if (att != MAX_ATTACK)
         SetFloatValue(UNIT_FIELD_BASEATTACKTIME + att, WeaponDelay);

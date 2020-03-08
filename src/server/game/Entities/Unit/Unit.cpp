@@ -8083,7 +8083,7 @@ float Unit::GetPPMProcChance(uint32 WeaponSpeed, float PPM, SpellInfo const* spe
             modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_PROC_PER_MINUTE, PPM);
 
     //Custom
-    return std::floor((std::max(static_cast<uint32>(1000), WeaponSpeed) * PPM) / 600.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
+    return fmax(0.10f, WeaponSpeed/1000) * (PPM / 60.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
 }
 
 void Unit::Mount(uint32 mount, uint32 VehicleId, uint32 creatureEntry)
