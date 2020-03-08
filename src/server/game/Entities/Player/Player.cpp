@@ -21553,22 +21553,22 @@ void Player::SendTaxiNodeStatusMultiple()
 
 void Player::InitDataForForm(bool reapplyMods)
 {
-    ShapeshiftForm form = GetShapeshiftForm();
+    /* ShapeshiftForm form = GetShapeshiftForm();
 
     SpellShapeshiftEntry const* ssEntry = sSpellShapeshiftStore.LookupEntry(form);
     if (ssEntry && ssEntry->attackSpeed)
-    {
-        SetAttackTime(BASE_ATTACK, ssEntry->attackSpeed);
+    { */
+        /* SetAttackTime(BASE_ATTACK, ssEntry->attackSpeed);
         SetAttackTime(OFF_ATTACK, ssEntry->attackSpeed);
-        SetAttackTime(RANGED_ATTACK, BASE_ATTACK_TIME);
+        SetAttackTime(RANGED_ATTACK, BASE_ATTACK_TIME); */
 
         //CUSTOM -> Apply Haste ratings to forms
         UpdateHasteRating(BASE_ATTACK, CR_HASTE_MELEE);
         UpdateHasteRating(OFF_ATTACK, CR_HASTE_MELEE);
         UpdateHasteRating(RANGED_ATTACK, CR_HASTE_RANGED);
-    }
+    /* }
     else
-        SetRegularAttackTime();
+        SetRegularAttackTime(); */
 
     UpdateDisplayPower();
 
