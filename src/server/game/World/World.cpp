@@ -1482,6 +1482,12 @@ void World::LoadConfigSettings(bool reload)
     m_float_configs[CONFIG_STATS_LIMITS_PARRY] = sConfigMgr->GetFloatDefault("Stats.Limits.Parry", 95.0f);
     m_float_configs[CONFIG_STATS_LIMITS_BLOCK] = sConfigMgr->GetFloatDefault("Stats.Limits.Block", 95.0f);
     m_float_configs[CONFIG_STATS_LIMITS_CRIT] = sConfigMgr->GetFloatDefault("Stats.Limits.Crit", 95.0f);
+    
+    //CUSTOM Stat Limits
+    m_int_configs[CONFIG_STATS_LIMITS_HASTE] = sConfigMgr->GetFloatDefault("Stats.Limits.HasteRating", 2500);
+    m_float_configs[CONFIG_STATS_CAPPED_ARMORREDUC] = sConfigMgr->GetFloatDefault("Stats.HardCap.ArmorDamageReduc", 0.0f);
+    m_float_configs[CONFIG_STATS_LIMITS_CASTZERO] = sConfigMgr->GetFloatDefault("Stats.HasteRating.CastSpeedInstant", 2500.0f);
+    m_float_configs[CONFIG_STATS_LIMITS_MELEEZERO] = sConfigMgr->GetFloatDefault("Stats.HasteRating.MeleeSpeedInstant", 2500.0f);
 
     //packet spoof punishment
     m_int_configs[CONFIG_PACKET_SPOOF_POLICY] = sConfigMgr->GetIntDefault("PacketSpoof.Policy", (uint32)WorldSession::DosProtection::POLICY_KICK);

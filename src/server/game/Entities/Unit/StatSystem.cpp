@@ -979,6 +979,54 @@ void Player::_RemoveAllStatBonuses()
     UpdateAllStats();
 }
 
+//Custom
+float Player::GetWeaponDelay(EquipmentSlots equipSlot) {
+
+    if (IsInFeralForm()) {
+        ShapeshiftForm form = GetShapeshiftForm();
+        SpellShapeshiftEntry const* ssEntry = sSpellShapeshiftStore.LookupEntry(form);
+        return  ssEntry ? ssEntry->attackSpeed * 1.0f : BASE_ATTACK_TIME * 1.0f;
+    }
+    
+    return m_items[equipSlot] ? (m_items[equipSlot]->GetTemplate()->Delay)*1.0f : BASE_ATTACK_TIME * 1.0f;
+}
+
+//Custom
+void Player::UpdateHasteRating(WeaponAttackType att, CombatRating combatRating){
+    float WeaponDelay = 0.0f;
+    float rating = m_baseRatingValue[combatRating];
+
+    if (m_baseRatingValue[combatRating] > sWorld->getIntConfig(CONFIG_STATS_LIMITS_HASTE))
+        rating = sWorld->getIntConfig(CONFIG_STATS_LIMITS_HASTE);
+
+    float INSTA_CAP = 0;
+    switch(att) {
+        case BASE_ATTACK:
+            WeaponDelay = GetWeaponDelay(EQUIPMENT_SLOT_MAINHAND);
+            INSTA_CAP = sWorld->getFloatConfig(CONFIG_STATS_LIMITS_MELEEZERO);
+            break;
+        case OFF_ATTACK:
+            WeaponDelay = GetWeaponDelay(EQUIPMENT_SLOT_OFFHAND);
+            INSTA_CAP = sWorld->getFloatConfig(CONFIG_STATS_LIMITS_MELEEZERO);
+            break;
+        case RANGED_ATTACK:
+            WeaponDelay = GetWeaponDelay(EQUIPMENT_SLOT_RANGED);
+            INSTA_CAP = sWorld->getFloatConfig(CONFIG_STATS_LIMITS_MELEEZERO);
+            break;
+        default:
+            WeaponDelay = GetFloatValue(UNIT_MOD_CAST_SPEED);
+            INSTA_CAP = sWorld->getFloatConfig(CONFIG_STATS_LIMITS_CASTZERO);
+            break;
+    }
+
+    WeaponDelay *= fmax( (INSTA_CAP - rating) / (INSTA_CAP + rating), 0.0f); //Zeroes out -- Dips into negatives without fmax()
+    
+    if (att != MAX_ATTACK)
+        SetFloatValue(UNIT_FIELD_BASEATTACKTIME + att, WeaponDelay);
+    else 
+        SetFloatValue(UNIT_MOD_CAST_SPEED, WeaponDelay);
+} 
+
 /*#######################################
 ########                         ########
 ########    MOBS STAT SYSTEM     ########

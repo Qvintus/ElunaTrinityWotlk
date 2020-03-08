@@ -1608,7 +1608,31 @@ void Unit::HandleEmoteCommand(uint32 emoteId)
 
     if (armor < 0.0f)
         armor = 0.0f;
+        
+    // High stat - Armor fix -> Custom calc
+    float armorToStack = sWorld->getFloatConfig(CONFIG_STATS_CAPPED_ARMORREDUC);
+    if (armorToStack > 0) { //Only if Active
+        if (armor > armorToStack) {
+            int armorStacks = armor / armorToStack;
+            float armor_reminder = fmod(armor, armorToStack);
+            uint32 effective_damage = damage;
+            for (int stacks = 0; stacks < armorStacks; stacks++) {
+                effective_damage = std::max(effective_damage * (1.0f - 0.75f), 1.0f);
+            }
 
+            if (armor_reminder > 0) {
+                float levelModifier = ((0.1f * armorToStack) - 120.f) / 25.5f; // Worked out from the damageReduction equation
+                float damageReduction = 0.1f * armor_reminder / (8.5f * levelModifier + 40.f); //Needs to be 3 to achieve 75% below
+                damageReduction /= (1.0f + damageReduction);
+
+                RoundToInterval(damageReduction, 0.f, 0.75f); // Shouldn't be necessary -- added for safety
+                effective_damage = std::max(effective_damage * (1.0f - damageReduction), 1.0f);
+            }
+
+            return uint32(effective_damage);
+        }
+    }
+    // Else do the original calc below
     float levelModifier = attacker ? attacker->GetLevel() : attackerLevel;
     if (levelModifier > 59.f)
         levelModifier = levelModifier + 4.5f * (levelModifier - 59.f);
@@ -8058,7 +8082,8 @@ float Unit::GetPPMProcChance(uint32 WeaponSpeed, float PPM, SpellInfo const* spe
         if (Player* modOwner = GetSpellModOwner())
             modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_PROC_PER_MINUTE, PPM);
 
-    return std::floor((WeaponSpeed * PPM) / 600.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
+    //Custom
+    return std::floor((std::max(static_cast<uint32>(1000), WeaponSpeed) * PPM) / 600.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
 }
 
 void Unit::Mount(uint32 mount, uint32 VehicleId, uint32 creatureEntry)

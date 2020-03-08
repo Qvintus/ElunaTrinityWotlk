@@ -5473,30 +5473,35 @@ float Player::OCTRegenMPPerSpirit() const
     return regen;
 }
 
+//Custom edit
 void Player::ApplyRatingMod(CombatRating combatRating, int32 value, bool apply)
 {
-    float oldRating = m_baseRatingValue[combatRating];
+    //float oldRating = m_baseRatingValue[combatRating]; -- Not used anymore
     m_baseRatingValue[combatRating] += (apply ? value : -value);
-
-    // explicit affected values
-    float const multiplier = GetRatingMultiplier(combatRating);
+    
+    // explicit affected values -- Not used anymore
+    /* float const multiplier = GetRatingMultiplier(combatRating);
     float const oldVal = oldRating * multiplier;
-    float const newVal = m_baseRatingValue[combatRating] * multiplier;
+    float const newVal = m_baseRatingValue[combatRating] * multiplier; */
     switch (combatRating)
     {
         case CR_HASTE_MELEE:
-            ApplyAttackTimePercentMod(BASE_ATTACK, oldVal, false);
+            UpdateHasteRating(BASE_ATTACK, combatRating);
+            UpdateHasteRating(OFF_ATTACK, combatRating);
+            /* ApplyAttackTimePercentMod(BASE_ATTACK, oldVal, false);
             ApplyAttackTimePercentMod(OFF_ATTACK, oldVal, false);
             ApplyAttackTimePercentMod(BASE_ATTACK, newVal, true);
-            ApplyAttackTimePercentMod(OFF_ATTACK, newVal, true);
+            ApplyAttackTimePercentMod(OFF_ATTACK, newVal, true); */
             break;
         case CR_HASTE_RANGED:
-            ApplyAttackTimePercentMod(RANGED_ATTACK, oldVal, false);
-            ApplyAttackTimePercentMod(RANGED_ATTACK, newVal, true);
+            /* ApplyAttackTimePercentMod(RANGED_ATTACK, oldVal, false);
+            ApplyAttackTimePercentMod(RANGED_ATTACK, newVal, true); */
+            UpdateHasteRating(RANGED_ATTACK, combatRating);
             break;
         case CR_HASTE_SPELL:
-            ApplyCastTimePercentMod(oldVal, false);
-            ApplyCastTimePercentMod(newVal, true);
+            /* ApplyCastTimePercentMod(oldVal, false);
+            ApplyCastTimePercentMod(newVal, true); */
+            UpdateHasteRating(MAX_ATTACK, combatRating);
             break;
         default:
             break;
@@ -7930,7 +7935,7 @@ void Player::CastItemCombatSpell(DamageInfo const& damageInfo)
                         switch (damageInfo.GetAttackType())
                         {
                             case BASE_ATTACK:
-                                slot = EQUIPMENT_SLOT_MAINHAND;
+                                slot = (i == 15) ? EQUIPMENT_SLOT_MAINHAND : EQUIPMENT_SLOT_OFFHAND; //Custom - Allow Shapeshift offhand proc
                                 break;
                             case OFF_ATTACK:
                                 slot = EQUIPMENT_SLOT_OFFHAND;
@@ -21556,6 +21561,11 @@ void Player::InitDataForForm(bool reapplyMods)
         SetAttackTime(BASE_ATTACK, ssEntry->attackSpeed);
         SetAttackTime(OFF_ATTACK, ssEntry->attackSpeed);
         SetAttackTime(RANGED_ATTACK, BASE_ATTACK_TIME);
+
+        //CUSTOM -> Apply Haste ratings to forms
+        UpdateHasteRating(BASE_ATTACK, CR_HASTE_MELEE);
+        UpdateHasteRating(OFF_ATTACK, CR_HASTE_MELEE);
+        UpdateHasteRating(RANGED_ATTACK, CR_HASTE_RANGED);
     }
     else
         SetRegularAttackTime();

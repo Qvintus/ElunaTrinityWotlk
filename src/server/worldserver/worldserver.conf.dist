@@ -2550,6 +2550,24 @@ Stats.Limits.Parry = 95.0
 Stats.Limits.Block = 95.0
 Stats.Limits.Crit  = 95.0
 
+
+###################################################################################################
+# ASGARD - Configs - Custom
+#
+# Requires Stats.Limits.Enable= 1
+#
+Stats.Limits.HasteRating = 2500
+
+#
+# Independent from Stats.Limits.Enable
+#
+
+Stats.HasteRating.CastSpeedInstant = 2500.0
+Stats.HasteRating.MeleeSpeedInstant = 2500.0
+
+# 0 = Disabled -- Vanilla Lv. 85 = 52710 armor for 75% damage reduction
+Stats.HardCap.ArmorDamageReduc = 0.0
+
 #
 ###################################################################################################
 

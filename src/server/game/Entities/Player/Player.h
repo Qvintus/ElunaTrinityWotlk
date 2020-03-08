@@ -1645,6 +1645,9 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         void SetRuneTimer(uint8 index, uint32 timer) { m_runeGraceCooldown[index] = timer; }
         uint32 GetLastRuneGraceTimer(uint8 index) const { return m_lastRuneGraceTimers[index]; }
         void SetLastRuneGraceTimer(uint8 index, uint32 timer) { m_lastRuneGraceTimers[index] = timer; }
+        
+        void UpdateHasteRating(WeaponAttackType att, CombatRating combatRating); //Custom
+        float GetWeaponDelay(EquipmentSlots equipSlot);//Custom
 
         ObjectGuid GetLootGUID() const { return m_lootGuid; }
         void SetLootGUID(ObjectGuid guid) { m_lootGuid = guid; }
