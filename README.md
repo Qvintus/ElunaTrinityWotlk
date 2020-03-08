@@ -14,6 +14,6 @@ Read file [COPYING](COPYING).
 
 ## Authors &amp; Contributors
 
-[TrinityCore](https://github.com/TrinityCore/TrinityCore): Read file [THANKS](THANKS).
+[TrinityCore](https://github.com/TrinityCore/TrinityCore)
 
 [ElunaEngine](https://github.com/ElunaLuaEngine/ElunaTrinityWotlk): Rochet2
