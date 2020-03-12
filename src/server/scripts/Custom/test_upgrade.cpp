@@ -4,6 +4,7 @@
 #include "Chat.h"
 #include "WorldSession.h"
 #include "Object.h"
+#include "Log.h"
 
 class test_upgrade_class : public CommandScript
 {
