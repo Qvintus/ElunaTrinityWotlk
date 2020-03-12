@@ -13,7 +13,7 @@ class test_upgrade_class : public CommandScript
         std::vector<ChatCommand> commandtbl = {
             {"titem1", rbac::RBAC_PERM_COMMAND_GM, true, &tItemEnchant1Handler, ""},
             {"titem2", rbac::RBAC_PERM_COMMAND_GM, true, &tItemEnchant2Handler, ""}
-        }
+        };
         return commandtbl;
     }
 
