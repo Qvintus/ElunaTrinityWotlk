@@ -2,10 +2,10 @@
 #include "RBAC.h"
 #include "Item.h"
 
-class test_upgrade : public CommandScript
+class test_upgrade_class : public CommandScript
 {
     public: 
-        test_upgrade() : CommandScript("test_upgrade") { }
+        test_upgrade_class() : CommandScript("test_upgrade") { }
 
     std::vector<ChatCommand> GetCommands() const
 	{
@@ -32,6 +32,6 @@ class test_upgrade : public CommandScript
 
 };
 
-void AddSC_test_upgrade {
-    new test_upgrade();
+void AddSC_test_upgrade() {
+    new test_upgrade_class();
 }
