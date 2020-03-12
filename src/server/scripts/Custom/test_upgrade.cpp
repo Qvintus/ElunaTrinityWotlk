@@ -1,6 +1,7 @@
 #include "ScriptMgr.h"
 #include "RBAC.h"
 #include "Item.h"
+#include "Chat.h"
 
 class test_upgrade_class : public CommandScript
 {
