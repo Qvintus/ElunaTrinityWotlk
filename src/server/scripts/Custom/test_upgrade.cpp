@@ -2,6 +2,7 @@
 #include "RBAC.h"
 #include "Item.h"
 #include "Chat.h"
+#include "WorldSession.h"
 
 class test_upgrade_class : public CommandScript
 {
