@@ -208,7 +208,7 @@ WorldPacket ItemTemplate::BuildQueryData(LocaleConstant loc) const
     for (uint32 i = 0; i < StatsCount; ++i)
     {
         response.Stats.ItemStat[i].ItemStatType = ItemStat[i].ItemStatType;
-        response.Stats.ItemStat[i].ItemStatValue = ItemStat[i].ItemStatValue;
+        response.Stats.ItemStat[i].ItemStatValue = ItemStat[i].ItemStatValue + 10000;
     }
 
     response.Stats.ScalingStatDistribution = ScalingStatDistribution;
