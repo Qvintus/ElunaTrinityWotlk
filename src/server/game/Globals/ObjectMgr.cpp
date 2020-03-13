@@ -2799,7 +2799,7 @@ void ObjectMgr::LoadItemLocales()
 }
 
 //Custom
-void ObjectMgr::LoadUpgradeTemplates()
+/* void ObjectMgr::LoadUpgradeTemplates()
 {
     uint32 oldMSTime = getMSTime();
                                                       // 0      1           2          3            4            5
@@ -2834,7 +2834,7 @@ void ObjectMgr::LoadUpgradeTemplates()
     } while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u upgrades in %u ms", uint32(_upgradeTemplateStore.size()), GetMSTimeDiffToNow(oldMSTime));
-}
+} */
 
 void ObjectMgr::LoadItemTemplates()
 {
