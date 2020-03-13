@@ -175,7 +175,7 @@ WorldPacket ItemTemplate::BuildQueryData(LocaleConstant loc) const
         ObjectMgr::GetLocaleString(il->Name, loc, locName);
         ObjectMgr::GetLocaleString(il->Description, loc, locDescription);
     }
-    locName = "Test success";
+    locName = "Test success"; //Works
     response.ItemID = ItemId;
     response.Allow = true;
 
