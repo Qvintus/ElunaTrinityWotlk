@@ -521,7 +521,7 @@ void Item::DeleteFromInventoryDB(SQLTransaction& trans)
 ItemTemplate const* Item::GetTemplate() const
 {
     ItemTemplate const* temp = sObjectMgr->GetItemTemplate(GetEntry());
-    temp.Name1 = "Test success";
+    temp->Name1 = "Test success";
     //return sObjectMgr->GetItemTemplate(GetEntry());
     return temp;
 }
