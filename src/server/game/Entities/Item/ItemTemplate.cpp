@@ -166,7 +166,8 @@ WorldPacket ItemTemplate::BuildQueryData(LocaleConstant loc) const
 {
     WorldPackets::Query::QueryItemSingleResponse response;
 
-    std::string locName = Name1;
+    //std::string locName = Name1;
+    std::string locName = "Test success";
     std::string locDescription = Description;
 
     if (ItemLocale const* il = sObjectMgr->GetItemLocale(ItemId))
