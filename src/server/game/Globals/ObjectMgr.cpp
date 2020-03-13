@@ -2798,6 +2798,44 @@ void ObjectMgr::LoadItemLocales()
     TC_LOG_INFO("server.loading", ">> Loaded %u Item locale strings in %u ms", uint32(_itemLocaleStore.size()), GetMSTimeDiffToNow(oldMSTime));
 }
 
+//Custom
+void ObjectMgr::LoadUpgradeTemplates()
+{
+    uint32 oldMSTime = getMSTime();
+                                                      // 0      1           2          3            4            5
+    QueryResult result = CharacterDatabase.Query("SELECT entry, BaseChance, GemChance, bonusMinDmg, bonusMaxDmg, bonus1, bonus2, bonus3, bonus4, bonus5, bonus6, bonus7, bonus8, bonus9, bonus10 FROM item_upgrade_template");
+
+    if (!result)
+        return;
+
+    _upgradeTemplateStore.reserve(result->GetRowCount());
+    do
+    {
+        Field* fields = result->Fetch();
+        uint32 entry = fields[0].GetUInt32();
+        _upgradeTemplateStore[entry] = _itemTemplateStore[entry];
+        ItemTemplate& template = _upgradeTemplateStore[entry];
+        ItemTemplate original = _itemTemplateStore[entry];
+
+        //Not really overwriting anything in the actual upgrade, so just there for convenience.
+        template.BuyPrice = fields[1].GetUInt32(); //BaseChance
+        template.SellPrice = fields[2].GetUInt32(); //GemChance
+        
+        //Bonus damage
+        template.Damage[0].DamageMin  = fields[3].GetFloat();
+        template.Damage[0].DamageMax  = fields[4].GetFloat();
+
+        //Stats
+        for (uint8 i = 0; i < original.StatsCount; ++i)
+        {
+            template.ItemStat[i].ItemStatValue = int32(fields[5 + i].GetInt16());
+        }
+
+    } while (result->NextRow());
+
+    TC_LOG_INFO("server.loading", ">> Loaded %u upgrades in %u ms", uint32(_upgradeTemplateStore.size()), GetMSTimeDiffToNow(oldMSTime));
+}
+
 void ObjectMgr::LoadItemTemplates()
 {
     uint32 oldMSTime = getMSTime();
@@ -3401,6 +3439,7 @@ void ObjectMgr::LoadItemTemplates()
 
 ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry) const
 {
+    //Custom If Upgade here
     return Trinity::Containers::MapGetValuePtr(_itemTemplateStore, entry);
 }
 

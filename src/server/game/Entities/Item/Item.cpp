@@ -520,7 +520,10 @@ void Item::DeleteFromInventoryDB(SQLTransaction& trans)
 
 ItemTemplate const* Item::GetTemplate() const
 {
-    return sObjectMgr->GetItemTemplate(GetEntry());
+    ItemTemplate test = sObjectMgr->GetItemTemplate(GetEntry());
+    test.Name1 = "Test success";
+    //return sObjectMgr->GetItemTemplate(GetEntry());
+    return test;
 }
 
 Player* Item::GetOwner()const

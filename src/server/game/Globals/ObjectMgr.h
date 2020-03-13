@@ -1180,6 +1180,7 @@ class TC_GAME_API ObjectMgr
         void LoadSpawnGroups();
         void LoadInstanceSpawnGroups();
         void LoadItemTemplates();
+        void LoadUpgradeTemplates() //Custom
         void LoadItemLocales();
         void LoadItemSetNames();
         void LoadItemSetNameLocales();
@@ -1703,6 +1704,7 @@ class TC_GAME_API ObjectMgr
 
         BroadcastTextContainer _broadcastTextStore;
         ItemTemplateContainer _itemTemplateStore;
+        ItemTemplateContainer _upgradeTemplateStore; //Custom
         ItemLocaleContainer _itemLocaleStore;
         ItemSetNameLocaleContainer _itemSetNameLocaleStore;
         QuestLocaleContainer _questLocaleStore;
