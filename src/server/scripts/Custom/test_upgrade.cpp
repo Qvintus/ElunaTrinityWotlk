@@ -5,6 +5,7 @@
 #include "WorldSession.h"
 #include "WorldPacket.h"
 #include "Object.h"
+#include "ObjectMgr.h"
 #include "Log.h"
 #include "QueryPackets.h"
 #include "Opcodes.h"
