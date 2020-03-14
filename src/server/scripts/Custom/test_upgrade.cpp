@@ -10,6 +10,12 @@
 #include "QueryPackets.h"
 #include "Opcodes.h"
 #include "World.h"
+#include "Bag.h"
+#include "Common.h"
+#include "DatabaseEnv.h"
+#include "DBCStores.h"
+#include "Player.h"
+#include "SpellInfo.h"
 
 class test_upgrade_class : public CommandScript
 {
