@@ -166,8 +166,7 @@ WorldPacket ItemTemplate::BuildQueryData(LocaleConstant loc) const
 {
     WorldPackets::Query::QueryItemSingleResponse response;
 
-    //std::string locName = Name1;
-    std::string locName = "Test success";
+    std::string locName = Name1;
     std::string locDescription = Description;
 
     if (ItemLocale const* il = sObjectMgr->GetItemLocale(ItemId))
@@ -175,7 +174,6 @@ WorldPacket ItemTemplate::BuildQueryData(LocaleConstant loc) const
         ObjectMgr::GetLocaleString(il->Name, loc, locName);
         ObjectMgr::GetLocaleString(il->Description, loc, locDescription);
     }
-    locName = "Test success"; //Works
     response.ItemID = ItemId;
     response.Allow = true;
 
@@ -208,7 +206,119 @@ WorldPacket ItemTemplate::BuildQueryData(LocaleConstant loc) const
     for (uint32 i = 0; i < StatsCount; ++i)
     {
         response.Stats.ItemStat[i].ItemStatType = ItemStat[i].ItemStatType;
-        response.Stats.ItemStat[i].ItemStatValue = ItemStat[i].ItemStatValue + 10000;
+        response.Stats.ItemStat[i].ItemStatValue = ItemStat[i].ItemStatValue; //Visual update
+    }
+
+    response.Stats.ScalingStatDistribution = ScalingStatDistribution;
+    response.Stats.ScalingStatValue = ScalingStatValue;
+
+    for (uint8 i = 0; i < MAX_ITEM_PROTO_DAMAGES; ++i)
+    {
+        response.Stats.Damage[i].DamageMin = Damage[i].DamageMin;
+        response.Stats.Damage[i].DamageMax = Damage[i].DamageMax;
+        response.Stats.Damage[i].DamageType = Damage[i].DamageType;
+    }
+
+    response.Stats.Resistance[SPELL_SCHOOL_NORMAL] = Armor;
+    response.Stats.Resistance[SPELL_SCHOOL_HOLY] = HolyRes;
+    response.Stats.Resistance[SPELL_SCHOOL_FIRE] = FireRes;
+    response.Stats.Resistance[SPELL_SCHOOL_NATURE] = NatureRes;
+    response.Stats.Resistance[SPELL_SCHOOL_FROST] = FrostRes;
+    response.Stats.Resistance[SPELL_SCHOOL_SHADOW] = ShadowRes;
+    response.Stats.Resistance[SPELL_SCHOOL_ARCANE] = ArcaneRes;
+
+    response.Stats.Delay = Delay;
+    response.Stats.AmmoType = AmmoType;
+    response.Stats.RangedModRange = RangedModRange;
+
+    for (uint8 s = 0; s < MAX_ITEM_PROTO_SPELLS; ++s)
+    {
+        response.Stats.Spells[s].SpellId = Spells[s].SpellId;
+        response.Stats.Spells[s].SpellTrigger = Spells[s].SpellTrigger;
+        response.Stats.Spells[s].SpellCharges = Spells[s].SpellCharges;
+        response.Stats.Spells[s].SpellCooldown = Spells[s].SpellCooldown;
+        response.Stats.Spells[s].SpellCategory = Spells[s].SpellCategory;
+        response.Stats.Spells[s].SpellCategoryCooldown = Spells[s].SpellCategoryCooldown;
+    }
+
+    response.Stats.Bonding = Bonding;
+    response.Stats.Description = locDescription;
+    response.Stats.PageText = PageText;
+    response.Stats.LanguageID = LanguageID;
+    response.Stats.PageMaterial = PageMaterial;
+    response.Stats.StartQuest = StartQuest;
+    response.Stats.LockID = LockID;
+    response.Stats.Material = Material;
+    response.Stats.Sheath = Sheath;
+    response.Stats.RandomProperty = RandomProperty;
+    response.Stats.RandomSuffix = RandomSuffix;
+    response.Stats.Block = Block;
+    response.Stats.ItemSet = ItemSet;
+    response.Stats.MaxDurability = MaxDurability;
+    response.Stats.Area = Area;
+    response.Stats.Map = Map;
+    response.Stats.BagFamily = BagFamily;
+    response.Stats.TotemCategory = TotemCategory;
+
+    for (uint8 s = 0; s < MAX_ITEM_PROTO_SOCKETS; ++s)
+    {
+        response.Stats.Socket[s].Color = Socket[s].Color;
+        response.Stats.Socket[s].Content = Socket[s].Content;
+    }
+
+    response.Stats.SocketBonus = socketBonus;
+    response.Stats.GemProperties = GemProperties;
+    response.Stats.RequiredDisenchantSkill = RequiredDisenchantSkill;
+    response.Stats.ArmorDamageModifier = ArmorDamageModifier;
+    response.Stats.Duration = Duration;
+    response.Stats.ItemLimitCategory = ItemLimitCategory;
+    response.Stats.HolidayId = HolidayId;
+
+    response.Write();
+    response.ShrinkToFit();
+    return response.Move();
+}
+
+//Custom
+WorldPacket ItemTemplate::BuildUpgradeQueryData(Item* item) const
+{
+    WorldPackets::Query::QueryItemSingleResponse response;
+
+    std::string locName = "Test Success";
+    std::string locDescription = Description;
+    response.ItemID = ItemId;
+    response.Allow = true;
+
+    response.Stats.Class = Class;
+    response.Stats.SubClass = SubClass;
+    response.Stats.SoundOverrideSubclass = SoundOverrideSubclass;
+    response.Stats.Name = locName;
+    response.Stats.DisplayInfoID = DisplayInfoID;
+    response.Stats.Quality = Quality;
+    response.Stats.Flags = Flags;
+    response.Stats.Flags2 = Flags2;
+    response.Stats.BuyPrice = BuyPrice;
+    response.Stats.SellPrice = SellPrice;
+    response.Stats.InventoryType = InventoryType;
+    response.Stats.AllowableClass = AllowableClass;
+    response.Stats.AllowableRace = AllowableRace;
+    response.Stats.ItemLevel = ItemLevel;
+    response.Stats.RequiredLevel = RequiredLevel;
+    response.Stats.RequiredSkill = RequiredSkill;
+    response.Stats.RequiredSkillRank = RequiredSkillRank;
+    response.Stats.RequiredSpell = RequiredSpell;
+    response.Stats.RequiredHonorRank = RequiredHonorRank;
+    response.Stats.RequiredCityRank = RequiredCityRank;
+    response.Stats.RequiredReputationFaction = RequiredReputationFaction;
+    response.Stats.RequiredReputationRank = RequiredReputationRank;
+    response.Stats.MaxCount = MaxCount;
+    response.Stats.Stackable = Stackable;
+    response.Stats.ContainerSlots = ContainerSlots;
+    response.Stats.StatsCount = StatsCount;
+    for (uint32 i = 0; i < StatsCount; ++i)
+    {
+        response.Stats.ItemStat[i].ItemStatType = ItemStat[i].ItemStatType;
+        response.Stats.ItemStat[i].ItemStatValue = ItemStat[i].ItemStatValue; //Visual update
     }
 
     response.Stats.ScalingStatDistribution = ScalingStatDistribution;

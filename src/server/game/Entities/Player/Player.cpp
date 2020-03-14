@@ -7337,7 +7337,7 @@ void Player::_ApplyItemMods(Item* item, uint8 slot, bool apply, bool updateItemA
     }
 
     ApplyEnchantment(item, apply);
-
+    BuildUpgradeQueryData(item);
     TC_LOG_DEBUG("entities.player.items", "Player::_ApplyItemMods: completed");
 }
 
@@ -7390,7 +7390,7 @@ void Player::_ApplyItemBonuses(ItemTemplate const* proto, uint8 slot, bool apply
             if (i >= proto->StatsCount)
                 continue;
             statType = proto->ItemStat[i].ItemStatType;
-            val = proto->ItemStat[i].ItemStatValue + 10000;
+            val = proto->ItemStat[i].ItemStatValue; //Works
         }
 
         if (val == 0)

@@ -719,6 +719,7 @@ struct ItemTemplate
 
     void InitializeQueryData();
     WorldPacket BuildQueryData(LocaleConstant loc) const;
+    WorldPacket BuildUpgradeQueryData(Item* item) const; //Custom
 
 private:
     // Cached info
