@@ -24,11 +24,10 @@ class test_upgrade_class : public CommandScript
         Player* player = chatHandler->GetSession()->GetPlayer();
         Item* mainhand = player->GetItemByPos(255, EQUIPMENT_SLOT_MAINHAND);
         ItemTemplate const* temp = mainhand->GetTemplate();
-        std::string name = temp->Name1;
         for (uint8 i = 0; i < MAX_ENCHANTMENT_SLOT; ++i) {
             for(uint8 x = 0; x < MAX_ENCHANTMENT_OFFSET; ++x) {
                 uint32 val = mainhand->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_1_1 + i*MAX_ENCHANTMENT_OFFSET + x);
-                TC_LOG_ERROR("misc", "%s -> 1_1: %d | Slot: %d | Type: %d", name, val, i, x);
+                TC_LOG_ERROR("misc", "%d -> 1_1: %d | Slot: %d | Type: %d", temp->StatsCount, val, i, x);
             }
         }
         
@@ -40,11 +39,10 @@ class test_upgrade_class : public CommandScript
         Player* player = chatHandler->GetSession()->GetPlayer();
         Item* mainhand = player->GetItemByPos(255, EQUIPMENT_SLOT_MAINHAND);
         ItemTemplate const* temp = mainhand->GetTemplate();
-        std::string name = temp->Name1;
         for (uint8 i = 0; i < MAX_ENCHANTMENT_SLOT; ++i) {
             for(uint8 x = 0; x < MAX_ENCHANTMENT_OFFSET; ++x) {
                 uint32 val = mainhand->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_1_3 + i*MAX_ENCHANTMENT_OFFSET + x);
-                TC_LOG_ERROR("misc", "%s -> 1_3: %d | Slot: %d | Type: %d",name, val, i, x);
+                TC_LOG_ERROR("misc", "%d -> 1_3: %d | Slot: %d | Type: %d",temp->StatsCount, val, i, x);
             }
         }
         return true;
