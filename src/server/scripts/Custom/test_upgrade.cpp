@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "Log.h"
 #include "QueryPackets.h"
+#include "Opcodes.h"
 
 class test_upgrade_class : public CommandScript
 {
