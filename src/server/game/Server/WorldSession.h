@@ -735,6 +735,7 @@ class TC_GAME_API WorldSession
         void HandleDestroyItemOpcode(WorldPacket& recvPacket);
         void HandleAutoEquipItemOpcode(WorldPacket& recvPacket);
         void HandleItemQuerySingleOpcode(WorldPackets::Query::QueryItemSingle& query);
+        void DoThing(ItemTemplate const* temp);
         void HandleSellItemOpcode(WorldPacket& recvPacket);
         void HandleBuyItemInSlotOpcode(WorldPacket& recvPacket);
         void HandleBuyItemOpcode(WorldPacket& recvPacket);

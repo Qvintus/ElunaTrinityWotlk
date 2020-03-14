@@ -17,25 +17,8 @@
 #include "Player.h"
 #include "SpellInfo.h"
 
-class test_upgrade_class : public CommandScript
-{
-    public: 
-        test_upgrade_class() : CommandScript("test_upgrade") { }
-
-    std::vector<ChatCommand> GetCommands() const
-	{
-        std::vector<ChatCommand> commandtbl = {
-            {"titem1", rbac::RBAC_PERM_COMMAND_GM, true, &tItemEnchant1Handler, ""}
-        };
-        return commandtbl;
-    }
-
-    static bool tItemEnchant1Handler(ChatHandler* chatHandler, char const* argsStr) {
-        Player* player = chatHandler->GetSession()->GetPlayer();
-        Item* mainhand = player->GetItemByPos(255, EQUIPMENT_SLOT_MAINHAND);
-        ItemTemplate const* temp = mainhand->GetTemplate();
-        
-        WorldPackets::Query::QueryItemSingleResponse response;
+void WorldSession::DoThing(ItemTemplate const* temp) {
+    WorldPackets::Query::QueryItemSingleResponse response;
 
         std::string locName = "Test Success";
         std::string locDescription = temp->Description;
@@ -140,6 +123,27 @@ class test_upgrade_class : public CommandScript
         response.Stats.HolidayId = temp->HolidayId;
 
         SendPacket(response.Write());
+}
+
+class test_upgrade_class : public CommandScript
+{
+    public: 
+        test_upgrade_class() : CommandScript("test_upgrade") { }
+
+    std::vector<ChatCommand> GetCommands() const
+	{
+        std::vector<ChatCommand> commandtbl = {
+            {"titem1", rbac::RBAC_PERM_COMMAND_GM, true, &tItemEnchant1Handler, ""}
+        };
+        return commandtbl;
+    }
+
+    static bool tItemEnchant1Handler(ChatHandler* chatHandler, char const* argsStr) {
+        Player* player = chatHandler->GetSession()->GetPlayer();
+        Item* mainhand = player->GetItemByPos(255, EQUIPMENT_SLOT_MAINHAND);
+        ItemTemplate const* temp = mainhand->GetTemplate();
+        
+        DoThing(temp);
 
         return true;
     }
