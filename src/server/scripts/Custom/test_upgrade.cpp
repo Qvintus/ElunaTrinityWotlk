@@ -98,7 +98,7 @@ class test_upgrade_class : public CommandScript
         }
 
         response.Stats.Bonding = temp->Bonding;
-        response.Stats.Description = temp->locDescription;
+        response.Stats.Description = locDescription;
         response.Stats.PageText = temp->PageText;
         response.Stats.LanguageID = temp->LanguageID;
         response.Stats.PageMaterial = temp->PageMaterial;
