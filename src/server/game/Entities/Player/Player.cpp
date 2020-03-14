@@ -7337,7 +7337,6 @@ void Player::_ApplyItemMods(Item* item, uint8 slot, bool apply, bool updateItemA
     }
 
     ApplyEnchantment(item, apply);
-    BuildUpgradeQueryData(item);
     TC_LOG_DEBUG("entities.player.items", "Player::_ApplyItemMods: completed");
 }
 
